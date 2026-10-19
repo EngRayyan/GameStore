@@ -1,0 +1,6 @@
+@Product_HostAddress = https://localhost:7282
+
+GET {{Product_HostAddress}}/api/GameStore?used=true&gameName=CallOfDuty
+Accept: application/json
+
+###
