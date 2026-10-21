@@ -3,12 +3,63 @@ using Microsoft.AspNetCore.Mvc;
 using Product.Dots;
 using Product.Model;
 
+
 namespace Product.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class GameStoreController : ControllerBase
     {
+        public List<Consoles> lstConsole = new List<Consoles>()
+        {
+        new Consoles { QRcode = 1234567890, consoleName = "PlayStation 5", IsUsed = true , price = 500, place = "1st" },
+        new Consoles
+    {
+        QRcode = 100024891002,
+        consoleName = "PlayStation 5 Spider-Man 2 Edition",
+        place = "Display Case B",
+        IsUsed = true,
+        price = 520.50m,
+        edition = 2023,
+        isLimitedEdition = true,
+        isRepaired = false
+    },
+    new Consoles
+    {
+        QRcode = 100024891003,
+        consoleName = "Xbox Series X",
+        place = "Shelf A-2",
+        IsUsed = false,
+        price = 480.00m,
+        edition = 2020,
+        isLimitedEdition = false,
+        isRepaired = false
+    },
+    new Consoles
+    {
+        QRcode = 100024891004,
+        consoleName = "Nintendo Switch OLED - Zelda Edition",
+        place = null, // تجربة الحقل القابل لأن يكون null
+        IsUsed = true,
+        price = 310.00m,
+        edition = 2023,
+        isLimitedEdition = true,
+        isRepaired = true
+    },
+    new Consoles
+    {
+        QRcode = 100024891005,
+        consoleName = "PlayStation 4 Pro",
+        place = "Storage Unit 4",
+        IsUsed = true,
+        price = 195.00m,
+        edition = 2016,
+        isLimitedEdition = false,
+        isRepaired = true
+    }
+
+
+        };
         public static List<Game> lstGame = new List<Game>()
         {
           new Game { QRcode = 6548465468, gameName = "Call Of Duty"         , IsUsed = true , price = 70, place = "2nd" },
@@ -65,6 +116,24 @@ namespace Product.Controllers
             return Ok(QRdata);
 
 
+        }
+        [HttpGet("GetAllConsoles")]
+        public IActionResult GetAllConsoles()
+        {
+            var data = from C in lstConsole
+                       orderby C.consoleName
+                       select new ConsoleDot
+                       {
+                           QRcode = C.QRcode,
+                           consoleName = C.consoleName,
+                           place = C.place,
+                           IsUsed = C.IsUsed,
+                           price = C.price,
+                           edition = C.edition,
+                           isLimitedEdition = C.isLimitedEdition,
+                           isRepaired = C.isRepaired
+                       };
+            return Ok(data);
         }
 
         [HttpPost]
