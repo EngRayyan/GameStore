@@ -15,5 +15,6 @@ namespace Product.Dots
         [Required]
         [Range(0,200,ErrorMessage = "Price must be between 0 and 200")]
         public decimal price { get; set; }
-    }
+        public string? part { get; set; }
+}
 }
